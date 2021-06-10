@@ -1,0 +1,29 @@
+security:
+  oauth2:
+    enabled: true
+    client:
+      clientId: XXX
+      clientSecret: XXX
+      accessTokenUri: https://login.microsoftonline.com/${azureTenantId}/oauth2/v2.0/token
+      userAuthorizationUri: https://login.microsoftonline.com/${azureTenantId}/oauth2/v2.0/authorize
+      clientAuthenticationScheme: query
+      scope: "api://spin/GetRoles"
+      preEstablishedRedirectUri: https://spin-gate.your-domain/login
+      useCurrentUri: false
+    resource:
+      userInfoUri: http://getuserinfo-svc:8008/getuserinfo
+    userInfoMapping:
+      email: userPrincipalName
+      firstName: givenName
+      lastName: surname
+      roles: roles
+      username: userPrincipalName 
+  
+services:
+  keel:
+    enabled: false
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
