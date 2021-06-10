@@ -1,4 +1,4 @@
-From the spinnaker side.. this is high level .. overview
+## Configure Spinnaker
 
 + update your gate.local.yml to use "${azureTenantId}/oauth2" endpoints (dont use the older ones)
 + change the "scope:" to use a "custom azure scope" ( i will come back to this ) to ensure that the access_token returns the correct [aud] "audience"
@@ -9,15 +9,15 @@ From the spinnaker side.. this is high level .. overview
 + The rest is AD based and I can supply screenshots to show you how its set it :slightly_smiling_face:
 + See repos for gate-local.yml .. and a super quick easy service "http://getuserinfo-svc:8008/getuserinfo" that I knocked up quickly in GO to demo it..  deploy the svc locally - it just extracts/validates and returns json for mapper
 
-# important
-* DONT forget that [username: YourField...] HAS to be in the mapping.. It must be mapped behind the scenes normally but when overriding with gate-local.yml if you dont specify it you with get errors around "user_id" missing... This was annoying and confusing as its called "username" in code but logged as "user_id" - so had to trawl source to find it 
+## Important that you include the `username` mapping
+* DONT forget that [`username`: YourField...] HAS to be in the mapping.. It must be mapped behind the scenes normally but when overriding with gate-local.yml if you dont specify it you with get errors around "user_id" missing... This was annoying and confusing as its called "username" in code but logged as "user_id" - so had to trawl source to find it 
 
-GetUserInfo server.. 
+## GetUserInfo server.. 
 + To build it..updates the TENANT_ID in `svr.go` and either run `docker build -t getuserinfo:latest` or `go run svr.go` 
 + To run it..if you use docker then run simply with `docker run -d -p 8008:8008 getuserinfo:latest` 
 
 
-To generate a test flow...
+## To generate a test flow...
 
 + Configure your AD callback to point to a server where u can grab a response eg.. http://httbin/2Fanything or localhost
 + I am using docker to run it locally ...docker run -d -p 8085:80 kennethreitz/httpbin
