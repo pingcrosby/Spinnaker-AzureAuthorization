@@ -8,3 +8,38 @@ From the spinnaker side.. this is high level .. overview
 + On the positive side everything we need is inside the token anyways .. so all we need to do now is NOT call the graphapi via userInfoUri and instead just call our own endpoint; which in my case simply validates/extracts the access_token and returns the field mappings ...
 + The rest is AD based and I can supply screenshots to show you how its set it :slightly_smiling_face:
 + See below for gate-local.yml .. and a super quick easy service "http://getuserinfo-svc:8008/getuserinfo" that I knocked up quickly in GO to demo it..  deploy the svc locally - it just extracts/validates and returns json for mapper
+
+
+
+To build server.. updates TENANT_ID and simple run `docker build -t `
+
+To generate a test flow...
+
++ Configure your AD callback to point to a server where u can grab a response eg.. http://httbin/2Fanything or localhost
++ I am using docker to run it locally ...docker run -d -p 8085:80 kennethreitz/httpbin
++ Chuck in a url like this. I have a few extra scopes in for fun but u wont need them :)
+
+```
+https://login.microsoftonline.com/{tenantid}/oauth2/v2.0/authorize?scope=profile%20openid%20email%20api://spin/GetRoles%20Files.Read.All&client_id={clientid}2&redirect_uri=http%3A%2F%2Flocalhost%3A8085%2Fanything&response_type=code&state=blob
+This will give u a response like - You just need the code... its a one time use :)
+{
+  "args": {
+    "code": "0.AUgAiuGw_fNh4kmJH84t75h7WUpJDwvDu1ZBjLvX_3D7plJIAAw.AQABAAIAAAD--DLA3VO7QrddgJg7WevrYzUX5uOyhU6SUEdP2CtY-IlW1zfWKPDk3z21q-Rj3PvBEAiaTo5bHleYHkgudCXIm97R_gR2KmRY86C57w_xdSbRR9ecXh_J-6cfp-rb9Uos8AVwalbrMC1QuZb9kMhUXypuOvm5cm-0mOH4RBQYlA8ANNJBXMOUnPNan3E2...one time only with this :)", 
+    "session_state": "f9535f09-edb9-4d06-9758-b86cd4058708", 
+    "state": "H6E1IW"
+  }, 
+  "data": "", 
+  "files": {}, 
+  "form": {}, 
+  "headers": {
+    "Sec-Fetch-Mode": "navigate", 
+    "Sec-Fetch-Site": "none", 
+  }, 
+  "json": null, 
+  "method": "GET", 
+  "origin": "172.17.0.1", 
+  "url": "abridged.."
+}
+```
+
++ Paste the above ^^ into a file called "code" and run this `token.sh` (update the settings for clientId first) script to consume the code and generate a nice access_token
