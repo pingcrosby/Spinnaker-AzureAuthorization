@@ -9,6 +9,8 @@ From the spinnaker side.. this is high level .. overview
 + The rest is AD based and I can supply screenshots to show you how its set it :slightly_smiling_face:
 + See repos for gate-local.yml .. and a super quick easy service "http://getuserinfo-svc:8008/getuserinfo" that I knocked up quickly in GO to demo it..  deploy the svc locally - it just extracts/validates and returns json for mapper
 
+# important
+* DONT forget that [username: YourField...] HAS to be in the mapping.. It must be mapped behind the scenes normally but when overriding with gate-local.yml if you dont specify it you with get errors around "user_id" missing... This was annoying and confusing as its called "username" in code but logged as "user_id" - so had to trawl source to find it 
 
 GetUserInfo server.. 
 + To build it..updates the TENANT_ID in `svr.go` and either run `docker build -t getuserinfo:latest` or `go run svr.go` 
@@ -45,3 +47,17 @@ This will give u a response like - You just need the code... its a one time use 
 ```
 
 + Paste the above ^^ into a file called "code" and run this `token.sh` (update the settings for clientId first) script to consume the code and generate a nice access_token
+
+
+## Azure Setup
+
++ Add some app roles 
+![image](https://user-images.githubusercontent.com/2591162/121576231-15e49c00-ca20-11eb-9671-dff9714c4ca4.png)
++ Allocate the roles to either a user or group ( see google ) but essentially if you click here you will end up in right place
+![image](https://user-images.githubusercontent.com/2591162/121576672-825f9b00-ca20-11eb-9dcb-cc5fa9d5cf06.png)
++ Expose an Api
+![image](https://user-images.githubusercontent.com/2591162/121576767-a1f6c380-ca20-11eb-8ce7-b91763ed9e96.png)
+
+
+
+
