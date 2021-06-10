@@ -7,11 +7,13 @@ From the spinnaker side.. this is high level .. overview
 + Once we have a valid access_token... which has all roles and groups inside it for a user acct.. Spinnaker will complain because its hard wired to always call the [userInfoUri] ( which by default is the microsoft graphApi ) and the token we just received  is not for the graph api... its for our appliation ( audience is api://???).. This is fustrating as that extra call is actually not needed as we have all we need inside the token - be cool if the devs could add a field "getinfofromToken" or equiv ?
 + On the positive side everything we need is inside the token anyways .. so all we need to do now is NOT call the graphapi via userInfoUri and instead just call our own endpoint; which in my case simply validates/extracts the access_token and returns the field mappings ...
 + The rest is AD based and I can supply screenshots to show you how its set it :slightly_smiling_face:
-+ See below for gate-local.yml .. and a super quick easy service "http://getuserinfo-svc:8008/getuserinfo" that I knocked up quickly in GO to demo it..  deploy the svc locally - it just extracts/validates and returns json for mapper
++ See repos for gate-local.yml .. and a super quick easy service "http://getuserinfo-svc:8008/getuserinfo" that I knocked up quickly in GO to demo it..  deploy the svc locally - it just extracts/validates and returns json for mapper
 
 
+GetUserInfo server.. 
++ To build it..updates the TENANT_ID in `svr.go` and either run `docker build -t getuserinfo:latest` or `go run svr.go` 
++ To run it..if you use docker then run simply with `docker run -d -p 8008:8008 getuserinfo:latest` 
 
-To build server.. updates TENANT_ID and simple run `docker build -t `
 
 To generate a test flow...
 
