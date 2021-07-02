@@ -2,26 +2,28 @@ security:
   oauth2:
     enabled: true
     client:
-      clientId: XXX
-      clientSecret: XXX
+      clientId: your-client-id
+      clientSecret: your-client-secret
       accessTokenUri: https://login.microsoftonline.com/${azureTenantId}/oauth2/v2.0/token
       userAuthorizationUri: https://login.microsoftonline.com/${azureTenantId}/oauth2/v2.0/authorize
       clientAuthenticationScheme: query
       scope: "api://spin/GetRoles"
-      preEstablishedRedirectUri: https://spin-gate.your-domain/login
+      preEstablishedRedirectUri:  https://spin-gate.your-domain/login
       useCurrentUri: false
     resource:
-      userInfoUri: http://getuserinfo-svc:8008/getuserinfo
+      userInfoUri: http://authz-getuserinfo/userinfo
     userInfoMapping:
       email: userPrincipalName
       firstName: givenName
       lastName: surname
       roles: roles
-      username: userPrincipalName 
-  
+      username: userPrincipalName
+
 services:
   keel:
     enabled: false
+
+# set to WARN normally
 logging:
   level:
     org:
