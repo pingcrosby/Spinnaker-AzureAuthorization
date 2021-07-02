@@ -10,11 +10,10 @@
 + See repos for gate-local.yml .. and a super quick easy service "http://getuserinfo-svc:8008/getuserinfo" that I knocked up quickly in GO to demo it..  deploy the svc locally - it just extracts/validates and returns json for mapper
 
 ## Important that you include the `username` mapping
-* DONT forget that [`username`: YourField...] HAS to be in the mapping.. It must be mapped behind the scenes normally but when overriding with gate-local.yml if you dont specify it you with get errors around "user_id" missing... This was annoying and confusing as its called "username" in code but logged as "user_id" - so had to trawl source to find it 
+* DONT forget that [`username`: YourField...] HAS to be in the mapping.. It must be mapped behind the scenes normally but when overriding with gate-local.yml if you dont specify it you with get errors around "user_id" missing... This was annoying and confusing as its called "username" in code but logged as "user_id" - so had to trawl source to find it
 
-## GetUserInfo server.. 
-+ To build it..updates the TENANT_ID in `svr.go` and either run `docker build -t getuserinfo:latest` or `go run svr.go` 
-+ To run it..if you use docker then run simply with `docker run -d -p 8008:8008 getuserinfo:latest` 
+## GetUserInfo server..
++ See the authz-getuserinfo folder
 
 
 ## To generate a test flow...
@@ -28,20 +27,20 @@ https://login.microsoftonline.com/{tenantid}/oauth2/v2.0/authorize?scope=profile
 This will give u a response like - You just need the code... its a one time use :)
 {
   "args": {
-    "code": "0.AUgAiuGw_fNh4kmJH84t75h7WUpJDwvDu1ZBjLvX_3D7plJIAAw.AQABAAIAAAD--DLA3VO7QrddgJg7WevrYzUX5uOyhU6SUEdP2CtY-IlW1zfWKPDk3z21q-Rj3PvBEAiaTo5bHleYHkgudCXIm97R_gR2KmRY86C57w_xdSbRR9ecXh_J-6cfp-rb9Uos8AVwalbrMC1QuZb9kMhUXypuOvm5cm-0mOH4RBQYlA8ANNJBXMOUnPNan3E2...one time only with this :)", 
-    "session_state": "f9535f09-edb9-4d06-9758-b86cd4058708", 
+    "code": "0.AUgAiuGw_fNh4kmJH84t75h7WUpJDwvDu1ZBjLvX_3D7plJIAAw.AQABAAIAAAD--DLA3VO7QrddgJg7WevrYzUX5uOyhU6SUEdP2CtY-IlW1zfWKPDk3z21q-Rj3PvBEAiaTo5bHleYHkgudCXIm97R_gR2KmRY86C57w_xdSbRR9ecXh_J-6cfp-rb9Uos8AVwalbrMC1QuZb9kMhUXypuOvm5cm-0mOH4RBQYlA8ANNJBXMOUnPNan3E2...one time only with this :)",
+    "session_state": "f9535f09-edb9-4d06-9758-b86cd4058708",
     "state": "H6E1IW"
-  }, 
-  "data": "", 
-  "files": {}, 
-  "form": {}, 
+  },
+  "data": "",
+  "files": {},
+  "form": {},
   "headers": {
-    "Sec-Fetch-Mode": "navigate", 
-    "Sec-Fetch-Site": "none", 
-  }, 
-  "json": null, 
-  "method": "GET", 
-  "origin": "172.17.0.1", 
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+  },
+  "json": null,
+  "method": "GET",
+  "origin": "172.17.0.1",
   "url": "abridged.."
 }
 ```
@@ -51,7 +50,7 @@ This will give u a response like - You just need the code... its a one time use 
 
 ## Azure Setup
 
-+ Add some app roles 
++ Add some app roles
 ![image](https://user-images.githubusercontent.com/2591162/121576231-15e49c00-ca20-11eb-9671-dff9714c4ca4.png)
 + Allocate the roles to either a user or group ( see google ) but essentially if you click here you will end up in right place
 ![image](https://user-images.githubusercontent.com/2591162/121576672-825f9b00-ca20-11eb-9dcb-cc5fa9d5cf06.png)
