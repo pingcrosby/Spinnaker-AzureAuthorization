@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: getuserinfo
+  namespace: spinnaker
+  labels:
+    app: spin
+spec:
+  selector:
+    app: spin
+    cluster: getuserinfo
+  ports:
+    - name: http-adm
+      port: 80
+      targetPort: 8080

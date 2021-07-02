@@ -1,0 +1,19 @@
+jwt:
+  # use your tenant instead of 000-000-000
+  issuer:  "https://sts.windows.net/000-000-000"
+  jwksUri: "https://login.microsoftonline.com/000-000-000/discovery/keys"
+  # get your audience from azure application
+  aud: api://spin
+  #replace with your apid
+  appid: 000000-000000-0000
+# mappings from the claim to spinnaker name
+claim2spin:
+  given_name : givenName
+  family_name: surname
+  upn: userPrincipalName
+  roles: roles
+# needed in here because im usin 8080 for jenkins already
+# log can be debug, info, warn, error, trace
+server:
+  port: 8008
+  log: debug

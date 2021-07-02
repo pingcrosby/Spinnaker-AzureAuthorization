@@ -1,0 +1,1 @@
+docker run -e CONFIGPATH=/usr/opt/config.yaml -v $PWD:/usr/opt -p 8008:8008 authz-getuserinfo:latest
